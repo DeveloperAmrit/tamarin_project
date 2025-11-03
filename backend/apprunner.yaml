@@ -1,11 +1,11 @@
 version: 1.0
-runtime: python3.11  # Solution 1: Be specific and use a modern runtime
+runtime: python3.11
 
 build:
   commands:
     pre-build:
-      # Solution 2: Install system packages needed to compile numpy
-      - yum install -y gcc python3-devel
+      # Use 'dnf' for Amazon Linux 2023 and the specific 'python3.11-devel' package
+      - dnf install -y gcc python3.11-devel
     build:
       - pip3 install -r requirements.txt
 run:
