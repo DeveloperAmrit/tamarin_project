@@ -4,11 +4,37 @@ runtime: python3.11
 build:
   commands:
     pre-build:
-      # Use 'dnf' for Amazon Linux 2023 and the specific 'python3.11-devel' package
+      - echo "--- PRE-BUILD STAGE ---"
+      - echo "Current directory:"
+      - pwd
+      - echo "Listing files:"
+      - ls -la
+      - echo "Installing system dependencies (gcc, python3.11-devel)..."
       - dnf install -y gcc python3.11-devel
+      - echo "System dependencies installed."
+      - echo "--- END PRE-BUILD ---"
+
     build:
+      - echo "--- BUILD STAGE ---"
+      - echo "Current directory:"
+      - pwd
+      - echo "Listing files (should show requirements.txt):"
+      - ls -la
+      - echo "Installing Python packages from requirements.txt..."
       - pip3 install -r requirements.txt
+      - echo "Python packages installed."
+      - echo "--- END BUILD ---"
+
 run:
-  command: python3 start_production.py
+  command: |
+    bash -c '
+      echo "--- RUN STAGE ---"
+      echo "Current directory:"
+      pwd
+      echo "Listing files (should show start_production.py):"
+      ls -la
+      echo "Starting application..."
+      python3 start_production.py
+    '
   network:
     port: 8080
